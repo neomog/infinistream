@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Invoice | TechFix Pro</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="invoice-content">
+            <!-- Invoice content will be loaded here -->
+        </div>
+        <div class="no-print">
+            <button onclick="window.print()">Print Invoice</button>
+            <a href="create.html" class="btn">Create Receipt</a>
+            <a href="list.html" class="btn">Back to List</a>
+        </div>
+    </div>
+    <script src="../shared.js"></script>
+    <script>
+        // Load invoice data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const invoiceId = urlParams.get('id');
+        
+        if (invoiceId) {
+            const invoice = getInvoiceById(invoiceId);
+            if (invoice) {
+                document.getElementById('invoice-content').innerHTML = 
+                    generateInvoiceHTML(invoice);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Invoice | TechFix Pro</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Invoice</h1>
+        <form id="invoice-form">
+            <div class="form-group">
+                <label for="job-order">Select Job Order</label>
+                <select id="job-order" required>
+                    <option value="">-- Select Job Order --</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <!-- Other invoice fields -->
+            <button type="submit">Create Invoice</button>
+        </form>
+        <a href="../index.html" class="btn">Back to Dashboard</a>
+    </div>
+    <script src="../shared.js"></script>
+    <script src="invoices.js"></script>
+</body>
+</html>

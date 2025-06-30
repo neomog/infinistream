@@ -1,0 +1,76 @@
+<!-- Add this after the Job Order table in the same file or create separate invoice.html -->
+<div id="invoice-section" style="margin-top: 40px; page-break-before: always;">
+    <div class="header">
+        <h2>INVOICE</h2>
+        <p>Due Date: <span id="due-date">[DD/MM/YYYY]</span></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Unit Price (₦)</th>
+                <th>Amount (₦)</th>
+            </tr>
+        </thead>
+        <tbody id="invoice-items">
+            <!-- Populated by JavaScript -->
+        </tbody>
+    </table>
+
+    <div style="text-align: right; margin-top: 20px;">
+        <p><strong>Subtotal: </strong> <span id="subtotal">₦0</span></p>
+        <p><strong>Tax (7.5% VAT): </strong> <span id="tax">₦0</span></p>
+        <p><strong>Total Due: </strong> <span id="total-due">₦0</span></p>
+    </div>
+
+    <div class="payment-info" style="margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 5px;">
+        <h3>PAYMENT INFORMATION</h3>
+        <p><strong>Bank Name:</strong> [Your Bank Name]</p>
+        <p><strong>Account Name:</strong> TECHFIX PRO ENTERPRISES</p>
+        <p><strong>Account Number:</strong> 0123456789</p>
+        <p><strong>Payment Reference:</strong> <span id="payment-ref">[Job ID]</span></p>
+        <p><i>For POS/transfer payments, please send proof to our WhatsApp: 0803-XXX-XXXX</i></p>
+    </div>
+</div>
+
+<script>
+    // Invoice data
+    const invoiceData = {
+        dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-NG'),
+        items: [
+            { name: "iPhone 12 Pro Screen Replacement", qty: 1, price: 45000 },
+            { name: "Battery Replacement", qty: 1, price: 25000 },
+            { name: "Labor Charges", qty: 1, price: 5000 }
+        ]
+    };
+
+    // Populate invoice
+    document.getElementById('due-date').textContent = invoiceData.dueDate;
+    document.getElementById('payment-ref').textContent = jobData.jobId;
+
+    const invoiceTable = document.getElementById('invoice-items');
+    let subtotal = 0;
+
+    invoiceData.items.forEach(item => {
+        const amount = item.qty * item.price;
+        subtotal += amount;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.qty}</td>
+            <td>₦${item.price.toLocaleString('en-NG')}</td>
+            <td>₦${amount.toLocaleString('en-NG')}</td>
+        `;
+        invoiceTable.appendChild(row);
+    });
+
+    const tax = subtotal * 0.075; // 7.5% VAT
+    const totalDue = subtotal + tax;
+
+    document.getElementById('subtotal').textContent = '₦' + subtotal.toLocaleString('en-NG');
+    document.getElementById('tax').textContent = '₦' + tax.toLocaleString('en-NG');
+    document.getElementById('total-due').textContent = '₦' + totalDue.toLocaleString('en-NG');
+</script>

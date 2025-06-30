@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Invoice Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Invoice Generator</h1>
+            <div class="theme-toggle">
+                <i class="fas fa-sun"></i>
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider round"></span>
+                </label>
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
+        <div class="controls">
+            <button id="generatePdf" class="btn"><i class="fas fa-file-pdf"></i> Save as PDF</button>
+            <button id="printInvoice" class="btn"><i class="fas fa-print"></i> Print Invoice</button>
+            <button id="clearAll" class="btn btn-danger"><i class="fas fa-trash"></i> Clear All</button>
+        </div>
+        <div class="invoice-container">
+            <div class="invoice-form">
+                <div class="form-section">
+                    <h2><i class="fas fa-info-circle"></i> Invoice Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="invoiceNumber">Invoice #</label>
+                            <input type="text" id="invoiceNumber" placeholder="INV-001">
+                        </div>
+                        <div class="form-group">
+                            <label for="invoiceDate">Date</label>
+                            <input type="date" id="invoiceDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="dueDate">Due Date</label>
+                            <input type="date" id="dueDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-building"></i> Your Company Info</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" id="companyName" placeholder="Your Company LLC">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyEmail">Email</label>
+                            <input type="email" id="companyEmail" placeholder="contact@company.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyAddress">Address</label>
+                            <textarea id="companyAddress" rows="2" placeholder="123 Business St, City, Country"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyPhone">Phone</label>
+                            <input type="tel" id="companyPhone" placeholder="+1 (555) 123-4567">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-user-tie"></i> Client Info</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientName">Client Name</label>
+                            <input type="text" id="clientName" placeholder="Client Company LLC">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientEmail">Client Email</label>
+                            <input type="email" id="clientEmail" placeholder="contact@client.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientAddress">Client Address</label>
+                            <textarea id="clientAddress" rows="2" placeholder="123 Client St, City, Country"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientPhone">Client Phone</label>
+                            <input type="tel" id="clientPhone" placeholder="+1 (555) 987-6543">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-receipt"></i> Items</h2>
+                    <div class="items-table">
+                        <div class="items-header">
+                            <div class="item-col description">Description</div>
+                            <div class="item-col quantity">Qty</div>
+                            <div class="item-col price">Unit Price</div>
+                            <div class="item-col tax">Tax</div>
+                            <div class="item-col amount">Amount</div>
+                            <div class="item-col action"></div>
+                        </div>
+                        <div id="itemsContainer">
+                            <!-- Items will be added here dynamically -->
+                        </div>
+                        <button id="addItem" class="btn"><i class="fas fa-plus"></i> Add Item</button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-calculator"></i> Totals</h2>
+                    <div class="totals-row">
+                        <div class="form-group">
+                            <label for="taxRate">Tax Rate (%)</label>
+                            <input type="number" id="taxRate" value="10" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount">Discount (₦)</label>
+                            <input type="number" id="discount" value="0" min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₦0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax:</span>
+                            <span id="taxAmount">₦0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Discount:</span>
+                            <span id="discountAmount">₦0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="totalAmount">₦0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-sticky-note"></i> Notes</h2>
+                    <textarea id="notes" rows="5" placeholder="Payment terms, thank you note, etc."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-preview-container" id="invoicePreview">
+            <div class="invoice-paper">
+                <div class="invoice-header">
+                    <div class="company-info">
+                        <h2 id="previewCompanyName">Your Company LLC</h2>
+                        <p id="previewCompanyAddress">123 Business St, City, Country</p>
+                        <p id="previewCompanyContact">contact@company.com | +1 (555) 123-4567</p>
+                    </div>
+                    <div class="invoice-title">
+                        <h1>INVOICE</h1>
+                        <div class="invoice-meta">
+                            <div class="meta-row">
+                                <span>Invoice #:</span>
+                                <span id="previewInvoiceNumber">INV-001</span>
+                            </div>
+                            <div class="meta-row">
+                                <span>Date:</span>
+                                <span id="previewInvoiceDate">Jan 1, 2023</span>
+                            </div>
+                            <div class="meta-row">
+                                <span>Due Date:</span>
+                                <span id="previewDueDate">Jan 15, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="client-info">
+                    <h3>Bill To:</h3>
+                    <p id="previewClientName">Client Company LLC</p>
+                    <p id="previewClientAddress">123 Client St, City, Country</p>
+                    <p id="previewClientContact">contact@client.com | +1 (555) 987-6543</p>
+                </div>
+
+                <div class="invoice-items">
+                    <div class="items-header">
+                        <div class="col-desc">Description</div>
+                        <div class="col-qty">Qty</div>
+                        <div class="col-price">Unit Price</div>
+                        <div class="col-tax">Tax</div>
+                        <div class="col-total">Amount</div>
+                    </div>
+                    <div id="previewItemsContainer">
+                        <!-- Preview items will be added here -->
+                        <div class="item-row empty-message">
+                            No items added yet
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoice-summary">
+                    <div class="summary-notes">
+                        <h4>Notes:</h4>
+                        <p id="previewNotes">Thank you for your business!</p>
+                    </div>
+                    <div class="summary-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="previewSubtotal">₦0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax:</span>
+                            <span id="previewTax">₦0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Discount:</span>
+                            <span id="previewDiscount">₦0.00</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Total:</span>
+                            <span id="previewTotal">₦0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoice-footer">
+                    <p>Thank you for your business!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

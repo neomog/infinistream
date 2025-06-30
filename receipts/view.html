@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Receipt | TechFix Pro</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="receipt-content">
+            <!-- Receipt content will be loaded here -->
+        </div>
+        <div class="no-print">
+            <button onclick="window.print()">Print Receipt</button>
+            <a href="list.html" class="btn">Back to List</a>
+        </div>
+    </div>
+    <script src="../shared.js"></script>
+    <script>
+        // Load receipt data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const receiptId = urlParams.get('id');
+        
+        if (receiptId) {
+            const receipt = getReceiptById(receiptId);
+            if (receipt) {
+                document.getElementById('receipt-content').innerHTML = 
+                    generateReceiptHTML(receipt);
+            }
+        }
+    </script>
+</body>
+</html>

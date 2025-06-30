@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job Order | TechFix Pro</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        .form-section {
+            margin-bottom: 25px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .form-section h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        textarea {
+            min-height: 100px;
+        }
+        button, .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        button:hover, .btn:hover {
+            background: #2980b9;
+        }
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        .service-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+        .remove-service {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            float: right;
+        }
+        .remove-service:hover {
+            background: #c0392b;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Job Order</h1>
+        
+        <form id="job-order-form">
+            <div class="form-section">
+                <h3>Customer Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customer-name">Full Name*</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Phone Number*</label>
+                        <input type="tel" id="customer-phone" placeholder="080X-XXX-XXXX" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customer-email">Email Address</label>
+                        <input type="email" id="customer-email">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">Address</label>
+                        <input type="text" id="customer-address">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Device Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="device-type">Device Type*</label>
+                        <select id="device-type" required>
+                            <option value="">Select Device Type</option>
+                            <option value="Smartphone">Smartphone</option>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Desktop">Desktop</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Printer">Printer</option>
+                            <option value="Server">Server</option>
+                            <option value="Network Equipment">Network Equipment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-brand">Brand*</label>
+                        <input type="text" id="device-brand" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="device-model">Model*</label>
+                        <input type="text" id="device-model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-sn">Serial Number/IMEI</label>
+                        <input type="text" id="device-sn">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="device-condition">Physical Condition</label>
+                    <textarea id="device-condition" placeholder="Describe any physical damage or notable conditions"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Problem Description</h3>
+                <div class="form-group">
+                    <label for="problem-description">Describe the problem*</label>
+                    <textarea id="problem-description" required placeholder="What issues is the device experiencing?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="diagnosis">Initial Diagnosis</label>
+                    <textarea id="diagnosis" placeholder="Technician's initial assessment"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Services & Pricing</h3>
+                <div id="services-container">
+                    <div class="service-item">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Service Description*</label>
+                                <input type="text" class="service-description" placeholder="e.g., Screen replacement" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cost (₦)*</label>
+                                <input type="number" class="service-cost" placeholder="e.g., 25000" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <input type="text" class="service-notes" placeholder="Additional details about this service">
+                            <button type="button" class="remove-service">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="add-service" style="margin-top: 10px;">+ Add Another Service</button>
+            </div>
+
+            <div class="form-section">
+                <h3>Additional Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="estimated-completion">Estimated Completion</label>
+                        <input type="date" id="estimated-completion">
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select id="priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                            <option value="Urgent">Urgent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="technician-notes">Technician Notes</label>
+                    <textarea id="technician-notes" placeholder="Any additional notes for this job"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="terms">
+                        <input type="checkbox" id="terms" required>
+                        I confirm that the customer has agreed to our terms of service
+                    </label>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit">Save Job Order</button>
+                <button type="button" id="print-btn">Save & Print</button>
+                <a href="list.html" class="btn btn-secondary">View All Jobs</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Add service item
+        document.getElementById('add-service').addEventListener('click', function() {
+            const servicesContainer = document.getElementById('services-container');
+            const newService = document.createElement('div');
+            newService.className = 'service-item';
+            newService.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Service Description*</label>
+                        <input type="text" class="service-description" placeholder="e.g., Screen replacement" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cost (₦)*</label>
+                        <input type="number" class="service-cost" placeholder="e.g., 25000" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <input type="text" class="service-notes" placeholder="Additional details about this service">
+                    <button type="button" class="remove-service">Remove</button>
+                </div>
+            `;
+            servicesContainer.appendChild(newService);
+            
+            // Add event listener to the new remove button
+            newService.querySelector('.remove-service').addEventListener('click', function() {
+                if (document.querySelectorAll('.service-item').length > 1) {
+                    newService.remove();
+                } else {
+                    alert('At least one service is required');
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('job-order-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveJobOrder(false);
+        });
+
+        // Print button
+        document.getElementById('print-btn').addEventListener('click', function() {
+            saveJobOrder(true);
+        });
+
+        // Save job order function
+        function saveJobOrder(shouldPrint) {
+            // Validate required fields
+            const requiredFields = [
+                'customer-name', 'customer-phone',
+                'device-type', 'device-brand', 'device-model',
+                'problem-description'
+            ];
+            
+            for (const fieldId of requiredFields) {
+                if (!document.getElementById(fieldId).value) {
+                    alert('Please fill all required fields!');
+                    document.getElementById(fieldId).focus();
+                    return;
+                }
+            }
+            
+            // Check at least one service has description and cost
+            let hasValidService = false;
+            document.querySelectorAll('.service-item').forEach(item => {
+                if (item.querySelector('.service-description').value && item.querySelector('.service-cost').value) {
+                    hasValidService = true;
+                }
+            });
+            
+            if (!hasValidService) {
+                alert('Please add at least one service with description and cost!');
+                return;
+            }
+            
+            if (!document.getElementById('terms').checked) {
+                alert('Please confirm the terms of service');
+                return;
+            }
+            
+            // Get all services
+            const services = [];
+            document.querySelectorAll('.service-item').forEach(item => {
+                services.push({
+                    description: item.querySelector('.service-description').value,
+                    cost: parseFloat(item.querySelector('.service-cost').value) || 0,
+                    notes: item.querySelector('.service-notes').value
+                });
+            });
+            
+            // Calculate total
+            const total = services.reduce((sum, service) => sum + service.cost, 0);
+            
+            // Create job order object
+            const jobOrder = {
+                id: 'JOB-' + Date.now(),
+                customer: {
+                    name: document.getElementById('customer-name').value,
+                    phone: document.getElementById('customer-phone').value,
+                    email: document.getElementById('customer-email').value,
+                    address: document.getElementById('customer-address').value
+                },
+                device: {
+                    type: document.getElementById('device-type').value,
+                    brand: document.getElementById('device-brand').value,
+                    model: document.getElementById('device-model').value,
+                    serialNumber: document.getElementById('device-sn').value,
+                    condition: document.getElementById('device-condition').value
+                },
+                problem: document.getElementById('problem-description').value,
+                diagnosis: document.getElementById('diagnosis').value,
+                services: services,
+                total: total,
+                estimatedCompletion: document.getElementById('estimated-completion').value,
+                priority: document.getElementById('priority').value,
+                technicianNotes: document.getElementById('technician-notes').value,
+                createdAt: new Date().toISOString(),
+                status: 'Pending'
+            };
+            
+            // Save to localStorage (in a real app, you would send to server)
+            let jobOrders = JSON.parse(localStorage.getItem('jobOrders')) || [];
+            jobOrders.push(jobOrder);
+            localStorage.setItem('jobOrders', JSON.stringify(jobOrders));
+            
+            alert('Job order saved successfully!');
+            
+            if (shouldPrint) {
+                // In a complete implementation, this would open the print view
+                // window.open(`view.html?id=${jobOrder.id}`, '_blank');
+                alert('Print functionality would open in a complete implementation');
+            }
+        }
+        
+        // Initialize date fields
+        document.getElementById('estimated-completion').valueAsDate = new Date();
+    </script>
+</body>
+</html>

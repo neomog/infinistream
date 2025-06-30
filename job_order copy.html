@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFix Pro | Job Order System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .form-container, .print-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .form-section {
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        .signature {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .signature-box {
+            border-top: 1px dashed #333;
+            padding-top: 10px;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+        .hidden {
+            display: none;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                padding: 0;
+            }
+            .print-container {
+                border: none;
+                padding: 0;
+            }
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .header h1 { color: #2c3e50; margin: 0; }
+        .tab-container { margin-bottom: 20px; }
+        .tab-buttons { display: flex; border-bottom: 1px solid #ddd; }
+        .tab-btn { padding: 10px 20px; background: #f1f1f1; border: none; cursor: pointer; }
+        .tab-btn.active { background: #3498db; color: white; }
+        .tab-content { display: none; padding: 20px 0; }
+        .tab-content.active { display: block; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-right: 10px; }
+        button:hover { background: #2980b9; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        .signature { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .signature-box { border-top: 1px dashed #333; padding-top: 10px; text-align: center; }
+        .footer { margin-top: 30px; text-align: center; font-size: 0.9em; color: #777; }
+        .hidden { display: none; }
+        .payment-details { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        @media print {
+            .no-print { display: none; }
+            body { padding: 0; }
+            .print-container { border: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container no-print">
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab('job-order')">Job Order</button>
+                <button class="tab-btn" onclick="openTab('invoice')">Invoice</button>
+                <button class="tab-btn" onclick="openTab('receipt')">Receipt</button>
+            </div>
+        </div>
+
+        <!-- JOB ORDER TAB -->
+        <div id="job-order" class="tab-content active">
+            <!-- (Previous Job Order Form Here - Same as before) -->
+             <!-- INPUT FORM -->
+    <div class="form-container no-print">
+        <div class="header">
+            <h1>TECHFIX PRO</h1>
+            <p>12 Computer Village, Ikeja, Lagos | 0803-XXX-XXXX | infinistream01@gmail.com</p>
+            <h2>JOB ORDER CREATION</h2>
+        </div>
+
+        <div class="form-section">
+            <h3>CUSTOMER DETAILS</h3>
+            <div class="form-row">
+                <div>
+                    <label for="input-customer-name">Full Name</label>
+                    <input type="text" id="input-customer-name" required>
+                </div>
+                <div>
+                    <label for="input-customer-phone">Phone (WhatsApp)</label>
+                    <input type="tel" id="input-customer-phone" placeholder="080X-XXX-XXXX" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label for="input-customer-email">Email</label>
+                    <input type="email" id="input-customer-email">
+                </div>
+                <div>
+                    <label for="input-order-date">Date</label>
+                    <input type="date" id="input-order-date" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>DEVICE DETAILS</h3>
+            <div class="form-row">
+                <div>
+                    <label for="input-device-type">Device Type</label>
+                    <select id="input-device-type" required>
+                        <option value="">Select</option>
+                        <option value="Smartphone">Smartphone</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Server">Server</option>
+                        <option value="CCTV System">CCTV System</option>
+                        <option value="Solar System">Solar System</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="input-device-brand">Brand</label>
+                    <input type="text" id="input-device-brand" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label for="input-device-model">Model</label>
+                    <input type="text" id="input-device-model" required>
+                </div>
+                <div>
+                    <label for="input-device-serial">Serial/IMEI</label>
+                    <input type="text" id="input-device-serial">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>PROBLEM DESCRIPTION</h3>
+            <textarea id="input-problem-description" rows="4" style="width:100%;" required></textarea>
+        </div>
+
+        <div class="form-section">
+            <h3>SERVICES & PRICING</h3>
+            <div id="services-container">
+                <div class="service-item form-row">
+                    <div>
+                        <label>Service</label>
+                        <input type="text" class="service-name" placeholder="e.g. Screen Replacement" required>
+                    </div>
+                    <div>
+                        <label>Cost (₦)</label>
+                        <input type="number" class="service-cost" placeholder="e.g. 25000" required>
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label>Notes</label>
+                        <input type="text" class="service-notes" placeholder="e.g. Original OLED display">
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="add-service" style="margin-top:10px;">+ Add Another Service</button>
+        </div>
+
+        <div style="margin-top:20px; text-align:center;">
+            <button type="button" id="generate-btn">Generate Job Order</button>
+            <button type="button" id="save-btn">Save Draft</button>
+            <button type="button" id="clear-btn">Clear Form</button>
+        </div>
+    </div>
+
+    <!-- PRINTABLE DOCUMENT -->
+    <div id="print-container" class="print-container hidden">
+        <!-- Content will be generated by JavaScript -->
+    </div>
+        </div>
+
+        <!-- INVOICE TAB -->
+        <div id="invoice" class="tab-content">
+            <div class="header">
+                <h2>CREATE INVOICE</h2>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="invoice-job-id">Job Order ID</label>
+                    <select id="invoice-job-id" onchange="loadJobForInvoice()">
+                        <option value="">Select Job Order</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div>
+                    <label for="invoice-date">Invoice Date</label>
+                    <input type="date" id="invoice-date" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="invoice-due-date">Due Date</label>
+                    <input type="date" id="invoice-due-date" required>
+                </div>
+                <div>
+                    <label for="invoice-tax">VAT (%)</label>
+                    <input type="number" id="invoice-tax" value="7.5" min="0" max="100">
+                </div>
+            </div>
+            
+            <h3>INVOICE ITEMS</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit Price (₦)</th>
+                        <th>Amount (₦)</th>
+                    </tr>
+                </thead>
+                <tbody id="invoice-items">
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="payment-details">
+                <h3>PAYMENT INFORMATION</h3>
+                <div class="form-row">
+                    <div>
+                        <label for="bank-name">Bank Name</label>
+                        <input type="text" id="bank-name" value="GTBank" required>
+                    </div>
+                    <div>
+                        <label for="account-name">Account Name</label>
+                        <input type="text" id="account-name" value="TECHFIX PRO ENTERPRISES" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="account-number">Account Number</label>
+                        <input type="text" id="account-number" value="0123456789" required>
+                    </div>
+                    <div>
+                        <label for="payment-instructions">Payment Instructions</label>
+                        <input type="text" id="payment-instructions" value="Include Job ID as payment reference">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="generateInvoice()">Generate Invoice</button>
+                <button onclick="saveInvoiceDraft()">Save Draft</button>
+            </div>
+        </div>
+
+        <!-- RECEIPT TAB -->
+        <div id="receipt" class="tab-content">
+            <div class="header">
+                <h2>CREATE RECEIPT</h2>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="receipt-invoice-id">Invoice Number</label>
+                    <select id="receipt-invoice-id" onchange="loadInvoiceForReceipt()">
+                        <option value="">Select Invoice</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div>
+                    <label for="receipt-date">Payment Date</label>
+                    <input type="date" id="receipt-date" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="payment-amount">Amount Paid (₦)</label>
+                    <input type="number" id="payment-amount" required>
+                </div>
+                <div>
+                    <label for="payment-method">Payment Method</label>
+                    <select id="payment-method" required>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="POS">POS</option>
+                        <option value="Card">Card</option>
+                        <option value="USSD">USSD</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="payment-reference">Payment Reference</label>
+                    <input type="text" id="payment-reference">
+                </div>
+                <div>
+                    <label for="received-by">Received By</label>
+                    <input type="text" id="received-by" value="Your Name" required>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="generateReceipt()">Generate Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRINTABLE INVOICE -->
+    <div id="invoice-print" class="print-container hidden">
+        <!-- Content will be generated by JavaScript -->
+    </div>
+
+    <!-- PRINTABLE RECEIPT -->
+    <div id="receipt-print" class="print-container hidden">
+        <!-- Content will be generated by JavaScript -->
+    </div>
+<script>
+        // DOM Elements
+        const generateBtn = document.getElementById('generate-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const addServiceBtn = document.getElementById('add-service');
+        const servicesContainer = document.getElementById('services-container');
+        const formContainer = document.querySelector('.form-container');
+        const printContainer = document.getElementById('print-container');
+
+        // Initialize form with saved data or defaults
+        function initForm() {
+            const savedData = localStorage.getItem('techfixpro_joborder');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Populate form fields
+                document.getElementById('input-customer-name').value = data.customerName || '';
+                document.getElementById('input-customer-phone').value = data.customerPhone || '';
+                document.getElementById('input-customer-email').value = data.customerEmail || '';
+                document.getElementById('input-order-date').value = data.orderDate || new Date().toISOString().split('T')[0];
+                document.getElementById('input-device-type').value = data.deviceType || '';
+                document.getElementById('input-device-brand').value = data.deviceBrand || '';
+                document.getElementById('input-device-model').value = data.deviceModel || '';
+                document.getElementById('input-device-serial').value = data.deviceSerial || '';
+                document.getElementById('input-problem-description').value = data.problemDescription || '';
+                
+                // Clear existing service inputs
+                servicesContainer.innerHTML = '';
+                
+                // Add service inputs
+                if (data.services && data.services.length > 0) {
+                    data.services.forEach((service, index) => {
+                        addServiceInput(service.name, service.cost, service.notes);
+                    });
+                } else {
+                    addServiceInput(); // Add one empty service
+                }
+            } else {
+                // Set default date
+                document.getElementById('input-order-date').value = new Date().toISOString().split('T')[0];
+                addServiceInput(); // Add one empty service
+            }
+        }
+
+        // Add new service input row
+        function addServiceInput(name = '', cost = '', notes = '') {
+            const div = document.createElement('div');
+            div.className = 'service-item form-row';
+            div.innerHTML = `
+                <div>
+                    <label>Service</label>
+                    <input type="text" class="service-name" value="${name}" placeholder="e.g. Screen Replacement" required>
+                </div>
+                <div>
+                    <label>Cost (₦)</label>
+                    <input type="number" class="service-cost" value="${cost}" placeholder="e.g. 25000" required>
+                </div>
+                <div style="grid-column: span 2;">
+                    <label>Notes</label>
+                    <input type="text" class="service-notes" value="${notes}" placeholder="e.g. Original OLED display">
+                    <button type="button" class="remove-service" style="float:right; background:#e74c3c; padding:2px 8px;">×</button>
+                </div>
+            `;
+            servicesContainer.appendChild(div);
+            
+            // Add event listener to remove button
+            div.querySelector('.remove-service').addEventListener('click', () => {
+                if (document.querySelectorAll('.service-item').length > 1) {
+                    div.remove();
+                } else {
+                    alert("At least one service is required");
+                }
+            });
+        }
+
+        // Save form data to localStorage
+        function saveFormData() {
+            const serviceItems = document.querySelectorAll('.service-item');
+            const services = [];
+            
+            serviceItems.forEach(item => {
+                services.push({
+                    name: item.querySelector('.service-name').value,
+                    cost: parseFloat(item.querySelector('.service-cost').value) || 0,
+                    notes: item.querySelector('.service-notes').value
+                });
+            });
+            
+            const formData = {
+                customerName: document.getElementById('input-customer-name').value,
+                customerPhone: document.getElementById('input-customer-phone').value,
+                customerEmail: document.getElementById('input-customer-email').value,
+                orderDate: document.getElementById('input-order-date').value,
+                deviceType: document.getElementById('input-device-type').value,
+                deviceBrand: document.getElementById('input-device-brand').value,
+                deviceModel: document.getElementById('input-device-model').value,
+                deviceSerial: document.getElementById('input-device-serial').value,
+                problemDescription: document.getElementById('input-problem-description').value,
+                services: services
+            };
+            
+            localStorage.setItem('techfixpro_joborder', JSON.stringify(formData));
+            alert('Draft saved successfully!');
+        }
+
+        // Generate printable document
+        function generateJobOrder() {
+            // Validate required fields
+            const requiredFields = [
+                'input-customer-name', 'input-customer-phone', 
+                'input-device-type', 'input-device-brand', 'input-device-model',
+                'input-problem-description'
+            ];
+            
+            for (const fieldId of requiredFields) {
+                if (!document.getElementById(fieldId).value) {
+                    alert('Please fill all required fields!');
+                    document.getElementById(fieldId).focus();
+                    return;
+                }
+            }
+            
+            // Check at least one service has name and cost
+            let hasValidService = false;
+            document.querySelectorAll('.service-item').forEach(item => {
+                if (item.querySelector('.service-name').value && item.querySelector('.service-cost').value) {
+                    hasValidService = true;
+                }
+            });
+            
+            if (!hasValidService) {
+                alert('Please add at least one service with name and cost!');
+                return;
+            }
+            
+            // Get all data
+            const serviceItems = document.querySelectorAll('.service-item');
+            const services = [];
+            let total = 0;
+            
+            serviceItems.forEach(item => {
+                const cost = parseFloat(item.querySelector('.service-cost').value) || 0;
+                services.push({
+                    name: item.querySelector('.service-name').value,
+                    cost: cost,
+                    notes: item.querySelector('.service-notes').value
+                });
+                total += cost;
+            });
+            
+            const jobData = {
+                customerName: document.getElementById('input-customer-name').value,
+                customerPhone: document.getElementById('input-customer-phone').value,
+                customerEmail: document.getElementById('input-customer-email').value,
+                orderDate: formatDate(document.getElementById('input-order-date').value),
+                deviceType: document.getElementById('input-device-type').value,
+                deviceBrand: document.getElementById('input-device-brand').value,
+                deviceModel: document.getElementById('input-device-model').value,
+                deviceSerial: document.getElementById('input-device-serial').value,
+                problemDescription: document.getElementById('input-problem-description').value,
+                jobId: generateJobId(),
+                services: services,
+                total: total
+            };
+            
+            // Save the final version
+            localStorage.setItem('techfixpro_joborder_' + jobData.jobId, JSON.stringify(jobData));
+            
+            // Generate HTML for printing
+            printContainer.innerHTML = generatePrintableHTML(jobData);
+            
+            // Show print view and hide form
+            formContainer.classList.add('hidden');
+            printContainer.classList.remove('hidden');
+        }
+
+        // Helper: Format date as DD/MM/YYYY
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-GB'); // UK format gives DD/MM/YYYY
+        }
+
+        // Helper: Generate job ID (TFP-YYYY-MM-NNN)
+        function generateJobId() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const num = Math.floor(Math.random() * 900) + 100; // Random 3-digit number
+            return `TFP-${year}-${month}-${num}`;
+        }
+
+        // Helper: Format money as ₦ with commas
+        function formatMoney(amount) {
+            return '₦' + parseFloat(amount).toLocaleString('en-NG');
+        }
+
+        // Generate printable HTML
+        function generatePrintableHTML(data) {
+            let servicesHTML = '';
+            data.services.forEach(service => {
+                servicesHTML += `
+                    <tr>
+                        <td>${service.name}</td>
+                        <td>${service.cost ? formatMoney(service.cost) : 'N/A'}</td>
+                        <td>${service.notes || ''}</td>
+                    </tr>
+                `;
+            });
+            
+            return `
+                <div class="header">
+                    <h1>TECHFIX PRO</h1>
+                    <p>12 Computer Village, Ikeja, Lagos | 0803-XXX-XXXX | infinistream01@gmail.com</p>
+                    <h2>JOB ORDER</h2>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                        <h3>CUSTOMER DETAILS</h3>
+                        <p><strong>Name:</strong> ${data.customerName}</p>
+                        <p><strong>Phone:</strong> ${data.customerPhone}</p>
+                        <p><strong>Email:</strong> ${data.customerEmail || 'N/A'}</p>
+                        <p><strong>Date:</strong> ${data.orderDate}</p>
+                    </div>
+
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                        <h3>DEVICE DETAILS</h3>
+                        <p><strong>Device Type:</strong> ${data.deviceType}</p>
+                        <p><strong>Brand/Model:</strong> ${data.deviceBrand} ${data.deviceModel}</p>
+                        <p><strong>Serial/IMEI:</strong> ${data.deviceSerial || 'N/A'}</p>
+                        <p><strong>Job ID:</strong> ${data.jobId}</p>
+                    </div>
+                </div>
+
+                <h3>PROBLEM DESCRIPTION</h3>
+                <div style="background:#f9f9f9; padding:15px; border-radius:5px; margin-bottom:20px;">
+                    ${data.problemDescription}
+                </div>
+
+                <h3>SERVICES TO BE PERFORMED</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Cost (₦)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${servicesHTML}
+                        <tr style="font-weight: bold; background: #f0f0f0;">
+                            <td>TOTAL</td>
+                            <td>${formatMoney(data.total)}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="signature">
+                    <div class="signature-box">
+                        <p>Customer's Signature</p>
+                    </div>
+                    <div class="signature-box">
+                        <p>Technician's Signature</p>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <p><strong>Terms & Conditions:</strong> Warranty void if device is tampered with by third parties. Not responsible for data loss. Unclaimed devices after 30 days will be disposed.</p>
+                    <p>Thank you for choosing TechFix Pro!</p>
+                </div>
+
+                <button class="no-print" onclick="window.print()" style="display: block; margin: 20px auto;">Print Job Order</button>
+                <button class="no-print" onclick="window.location.reload()" style="display: block; margin: 20px auto; background: #27ae60;">Create New Job Order</button>
+            `;
+        }
+
+        // Event Listeners
+        addServiceBtn.addEventListener('click', () => addServiceInput());
+        saveBtn.addEventListener('click', saveFormData);
+        generateBtn.addEventListener('click', generateJobOrder); // Fixed: Added proper reference
+        clearBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear the form?')) {
+                localStorage.removeItem('techfixpro_joborder');
+                document.querySelector('form').reset();
+                servicesContainer.innerHTML = '';
+                addServiceInput();
+                document.getElementById('input-order-date').value = new Date().toISOString().split('T')[0];
+            }
+        });
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', initForm); // Ensure DOM is loaded first
+    </script>
+</body>
+</html>

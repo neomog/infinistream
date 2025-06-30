@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFix Pro - Repair Services Request</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .service-form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .service-option {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .service-option input {
+            margin-right: 8px;
+        }
+        
+        .delivery-options {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .delivery-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 600px) {
+            .service-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .delivery-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TechFix Pro Service Request</h1>
+        <p class="tagline">One-stop solution for all your tech repair and installation needs</p>
+    </header>
+    
+    
+    <form class="service-form" action="process_request.php" method="POST" style="display: none;">
+        <div class="form-group">
+            <label for="name">Full Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="address">Address (for on-site services)</label>
+            <input type="text" id="address" name="address">
+        </div>
+        
+        <div class="form-group">
+            <label>Select Service(s) Needed <span class="required">*</span></label>
+            <div class="service-options">
+                <div class="service-option">
+                    <input type="checkbox" id="phone-repair" name="services[]" value="Smartphone Repair">
+                    <label for="phone-repair">Smartphone Repair</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="computer-repair" name="services[]" value="Computer/Laptop Repair">
+                    <label for="computer-repair">Computer/Laptop Repair</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="server-repair" name="services[]" value="Server Repair">
+                    <label for="server-repair">Server Repair</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="networking" name="services[]" value="Networking Solutions">
+                    <label for="networking">Networking Solutions</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="solar-home" name="services[]" value="Home Solar Installation">
+                    <label for="solar-home">Home Solar Installation</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="solar-commercial" name="services[]" value="Commercial Solar Installation">
+                    <label for="solar-commercial">Commercial Solar Installation</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="cctv-home" name="services[]" value="Home CCTV Installation">
+                    <label for="cctv-home">Home CCTV Installation</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="cctv-commercial" name="services[]" value="Commercial CCTV Installation">
+                    <label for="cctv-commercial">Commercial CCTV Installation</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="buy-phone" name="services[]" value="Smartphone Purchase">
+                    <label for="buy-phone">Smartphone Purchase</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="buy-laptop" name="services[]" value="Laptop Purchase">
+                    <label for="buy-laptop">Laptop Purchase</label>
+                </div>
+                
+                <div class="service-option">
+                    <input type="checkbox" id="buy-parts" name="services[]" value="Parts Purchase">
+                    <label for="buy-parts">Parts Purchase</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="details">Service Details/Description</label>
+            <textarea id="details" name="details" rows="4" placeholder="Please describe your issue or what you're looking for..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Service Preference <span class="required">*</span></label>
+            <div class="delivery-options">
+                <div class="delivery-option">
+                    <input type="radio" id="pickup" name="service_type" value="pickup" required>
+                    <label for="pickup">I'll drop off/pick up</label>
+                </div>
+                <div class="delivery-option">
+                    <input type="radio" id="onsite" name="service_type" value="onsite">
+                    <label for="onsite">On-site service (for installations)</label>
+                </div>
+                <div class="delivery-option">
+                    <input type="radio" id="delivery" name="service_type" value="delivery">
+                    <label for="delivery">Arrange delivery/pickup</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="preferred-time">Preferred Contact Time</label>
+            <select id="preferred-time" name="preferred_time">
+                <option value="any">Any time</option>
+                <option value="morning">Morning (8am-12pm)</option>
+                <option value="afternoon">Afternoon (12pm-4pm)</option>
+                <option value="evening">Evening (4pm-8pm)</option>
+            </select>
+        </div>
+        
+        <button type="submit">Submit Service Request</button>
+    </form>
+
+    <a href="index.html"><button> Go Back Home</button></a>
+
+    <div class="form-container contact-form">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdPpFK4uUt9W_u29KSIJLdK-lxqVqz-98ZFoAc6bDkO38gfUA/viewform?embedded=true" width="640" height="959" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+
+            <a href="index.html"><button> Go Back Home</button></a>
+</body>
+</html>

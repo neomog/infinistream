@@ -15,7 +15,14 @@
             <div class="logo">
                 <a href="index.html">TechFix<span>Pro</span> | <small>by Infinistream</small></a>
             </div>
-            <nav>
+
+            <!-- Hamburger button (visible on mobile) -->
+            <button class="menu-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+
+            <!-- nav now has an id for targeting -->
+            <nav id="main-nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="services.html">Services</a></li>
@@ -24,6 +31,7 @@
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
+
             <div class="cta-button">
                 <a href="tel:+2349036425748" class="btn"><i class="fas fa-phone"></i> Call Now</a>
             </div>
